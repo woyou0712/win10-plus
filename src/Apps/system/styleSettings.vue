@@ -15,9 +15,10 @@
             class="img-item"
             v-for="(item, index) in bgImages"
             :key="index"
-            :style="{ backgroundImage: `url(${item.url})` }"
+            :style="{ backgroundImage: `url('${item.url}')` }"
             @click="submitSettings({bg_type:0 ,bg_id:item.id})"
-          ></div>
+          >
+          </div>
         </div>
         <div class="title">上传图片</div>
         <div class="images">

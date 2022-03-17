@@ -158,7 +158,7 @@ function setBg({ bg_type, bg_id }) {
     bgStyle["backgroundImage"] = "none"
     bgStyle["backgroundColor"] = bg.color
   } else {
-    bgStyle["backgroundImage"] = `url(${bg.url ? bg.url : ""})`
+    bgStyle["backgroundImage"] = `url('${bg.url ? bg.url : ""}')`
   }
 }
 
