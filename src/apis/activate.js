@@ -11,26 +11,12 @@ import service from "@/assets/service.js"
   })
 }
 
-
 /**
  * 获取系统设置文件上传临时Key
  */
-export function getSettingsCosKey() {
+ export function getSettingsCosKey() {
   return service({
     url: "/system/cos/systemKey",
     method: "get"
   })
 }
-
-
-/**
- * 用户列表
- */
-export function getUserList(params) {
-  return service({
-    url: `/system/user/list`,
-    method: "get",
-    params
-  })
-}
-

@@ -1,5 +1,5 @@
 <template>
-  <div class="windows-win" :style="winAddr" v-show="showWin">
+  <div class="windows-win" :style="winAddr">
     <div class="left">
       <div class="app-list" :style="appListStyel">
         <!-- 退出 -->
@@ -35,7 +35,7 @@
           <div class="icon-box">
             <div
               class="icon"
-              v-html="AppIdMap[item.appId] && AppIdMap[item.appId].icon"
+              v-html="appMap[item.appId] && appMap[item.appId].icon"
             ></div>
           </div>
           <div class="name">{{ item.name }}</div>
@@ -58,26 +58,20 @@
 <script>
 export default {
   setup() {
-    const { leftList, showWin } = require("./win.js");
-    const { AppIdMap, AllApp } = require("@/views/methods/appList.js"); // 应用映射表
-    const {
-      winAddr,
-      footStyle,
-      winLeftListStyle,
-    } = require("@/views/methods/styleSettings.js");
+    const { leftList } = require("./option.js");
+    const { winAddr, winLeftListStyle } = require("@/views/methods/setWin.js");
+    const { footStyle } = require("@/views/methods/setFooter");
     const { quitLogin } = require("@/assets/Token.js"); // 退出登录
-    const { openApp } = require("@/views/methods/openApp.js");
+    const { openApp, appMap } = require("@/views/methods/openApp.js");
 
     return {
-      showWin,
       winAddr,
       footStyle,
       winLeftListStyle,
-      AppIdMap,
-      AllApp,
       leftList,
       quitLogin,
       openApp,
+      appMap,
     };
   },
   computed: {
@@ -90,7 +84,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -104,6 +97,8 @@ export default {
   z-index: 999999;
   display: flex;
   opacity: 0.95;
+  background-color: #ffffff;
+  color: #666666;
   .left {
     width: 40px;
     height: 100%;

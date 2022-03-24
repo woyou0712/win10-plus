@@ -1,7 +1,5 @@
 import { ref, reactive } from "vue";
 
-export const showWin = ref(false)
-
 export const leftList = reactive([
   {
     name: "系统",

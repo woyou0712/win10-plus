@@ -1,14 +1,17 @@
 <template>
-  <div id="window-home" @click="showWin = false">
+  <div id="window-home" @click="isShowWin = false">
     <!-- 桌面 -->
     <div v-Rclick="HomeMenu" id="window-home-app-addrs" :style="bgStyle">
-      <!-- 应用 -->
+      <!-- 系统应用 -->
       <div
         v-Rclick="AppMenu"
         class="window-home-app-item"
-        v-for="(item, index) in HomeApp"
+        v-for="(item, index) in systemAppHome"
         :key="index"
-        :data-key="item.id"
+        :app-name="item.name"
+        :app-type="item.type"
+        :app-url="item.url"
+        :app-id="item.app_id"
         :style="{
           width: `${appIconSize.width}px`,
           height: `${appIconSize.height}px`,
@@ -16,18 +19,39 @@
           top: `${item.top}px`,
           left: `${item.left}px`,
         }"
-        @dblclick="openApp(item.id)"
+        @dblclick="openApp(item)"
       >
-        <div class="app-icon" v-html="item.icon"></div>
+        <div class="app-icon" v-html="item.icon_el"></div>
+        <div class="app-name" v-text="item.name"></div>
+      </div>
+      <!-- 个人应用 -->
+      <div
+        v-Rclick="AppMenu"
+        class="window-home-app-item"
+        v-for="(item, index) in userAppHome"
+        :key="index"
+        :app-name="item.name"
+        :app-url="item.url"
+        :app-id="item.app_id"
+        :style="{
+          width: `${appIconSize.width}px`,
+          height: `${appIconSize.height}px`,
+          fontSize: `${appIconSize.fontSize}px`,
+          top: `${item.top}px`,
+          left: `${item.left}px`,
+        }"
+        @dblclick="openApp(item)"
+      >
+        <div class="app-icon" v-html="item.icon_el"></div>
         <div class="app-name" v-text="item.name"></div>
       </div>
       <!-- Win菜单 -->
-      <windows-win />
+      <windows-win v-show="isShowWin" />
     </div>
     <!-- 任务栏 -->
     <footer v-Rclick="footMenu" id="window-home-footer" :style="footStyle">
       <!-- win -->
-      <div class="app-item" @click.stop="showWin = !showWin">
+      <div class="app-item" @click.stop="isShowWin = !isShowWin">
         <img class="app-icon" :src="WinLogo" />
       </div>
       <!-- 打开的应用 -->
@@ -36,11 +60,14 @@
         v-for="(item, index) in openAppList"
         :key="index"
         :class="item.id === topAppId ? 'top' : ''"
-        @click="openApp(item.id)"
+        @click="setTopApp(item)"
+        :title="item.title"
       >
         <div
           class="app-icon"
-          v-html="AppIdMap[item.id] ? AppIdMap[item.id].icon : defaultSvg"
+          v-html="
+            allShowAppMap[item.id] ? allShowAppMap[item.id].icon : defaultIcon
+          "
         ></div>
       </div>
     </footer>
@@ -48,95 +75,94 @@
 </template>
 
 <script>
-import { getUserInfo } from "@/assets/Token.js";
-import { reactive, onMounted } from "vue";
+import { ref } from "vue";
+import WindowsWin from "@/components/Win/index.vue";
 import WinLogo from "@/assets/images/logo.png";
-import WindowsWin from "@/components/Win.vue";
-
+import { Win } from "@/new-dream-plus/index.js";
+let sliceHomeTime = null; // 窗口大小变化防抖装置
 export default {
   components: { "windows-win": WindowsWin },
   name: "Home",
   setup() {
-    // 用户
-    const userInfo = reactive(getUserInfo());
-
-    // 桌面图标网格
+    /**
+     * 应用
+     */
     const {
       appIconSize,
-      slice,
-      HomeApp,
-      AllApp,
-      AppIdMap,
-    } = require("./methods/appList.js");
-    // 右键菜单
-    const { HomeMenu, AppMenu, footMenu } = require("./methods/Rmenus.js");
-    // 打开应用, 已打开的应用，置顶应用
-    const { openApp, openAppList, topAppId } = require("./methods/openApp.js");
-    // 个性化配置
+      systemAppHome,
+      userAppHome,
+      initSystemApp,
+      initUserApp,
+      sliceHome,
+    } = require("./methods/setApp.js");
     const {
-      bgStyle,
-      footStyle,
-      initSettings,
-    } = require("./methods/styleSettings.js");
-    onMounted(() => {
-      initSettings();
-    });
+      openApp,
+      setTopApp,
+      openAppList,
+      topAppId,
+    } = require("./methods/openApp.js");
+    /**
+     * 个性化
+     */
+    // 设置
+    const { initSettings } = require("./methods/settingStyle.js");
+    // 桌面
+    const { bgStyle } = require("./methods/setHome.js");
+    // 任务栏
+    const { footStyle } = require("./methods/setFooter.js");
+    // 右键菜单
+    const { HomeMenu, footMenu, AppMenu } = require("./methods/Rmenus.js");
 
-    const { showWin } = require("@/components/win.js");
-
+    const isShowWin = ref(false);
     return {
-      userInfo, // 用户信息
-
+      // 个性化样式
+      initSettings, // 初始化个人设置
       bgStyle, // 背景样式
-
       footStyle, // 任务栏样式
-
-      HomeMenu, // 桌面右键菜单
-      AppMenu, // 应用右键图标
-      footMenu, // 任务栏右键菜单
+      // 桌面应用
       appIconSize, // 应用图标大小
-
+      systemAppHome,
+      userAppHome,
+      initSystemApp, // 初始化个人应用
+      initUserApp, // 初始化系统应用
+      sliceHome, // 切割桌面，放置APP
       openApp, // 打开应用
-      openAppList, // 已打开的应用
-      topAppId, // 置顶应用
-
-      slice, // 将桌面切割成网格区域
-      HomeApp, //桌面应用
-      AllApp, // 所有应用
-      AppIdMap, // 应用ID映射表
+      setTopApp, // 置顶应用
+      openAppList, // 打开的应用列表
+      topAppId, // 当前置顶的APP
+      // 右键菜单
+      HomeMenu,
+      footMenu,
+      AppMenu,
       WinLogo,
-      showWin, // 是否显示Win菜单
-      defaultSvg,
+      isShowWin,
     };
   },
-
-  mounted() {
+  computed: {
+    defaultIcon() {
+      return window.WINDOWS_CONFIG.defaultIcon;
+    },
+    allShowAppMap() {
+      return Win.allMap;
+    },
+  },
+  async mounted() {
+    // 个性化设置
+    await this.initSettings();
+    // 桌面应用
+    this.initSystemApp(); // 初始化系统应用
+    await this.initUserApp(); // 初始化个人应用
     // 切割网格
-    this.slice();
-    // 监听窗口大小变化
+    this.sliceHome();
+    // 监听窗口大小变化 防抖设置
     window.onresize = () => {
-      this.slice();
+      clearTimeout(sliceHomeTime);
+      sliceHomeTime = setTimeout(() => {
+        this.sliceHome();
+      }, 150);
     };
   },
 };
-const defaultSvg = `
- <svg
-      t="1647237790206"
-      class="icon"
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="3119"
-      width="100%"
-      height="100%"
-    >
-      <path
-        fill="currentColor"
-        d="M288 640C270.08 640 256 654.08 256 672 256 689.92 270.08 704 288 704 305.92 704 320 689.92 320 672 320 654.08 305.92 640 288 640zM288 256C270.08 256 256 270.08 256 288 256 305.92 270.08 320 288 320 305.92 320 320 305.92 320 288 320 270.08 305.92 256 288 256zM288 448C270.08 448 256 462.08 256 480 256 497.92 270.08 512 288 512 305.92 512 320 497.92 320 480 320 462.08 305.92 448 288 448zM768 64 192 64C121.6 64 64 121.6 64 192l0 576c0 70.4 57.6 128 128 128l576 0c70.4 0 128-57.6 128-128L896 192C896 121.6 838.4 64 768 64zM832 768c0 35.2-28.8 64-64 64L192 832c-35.2 0-64-28.8-64-64L128 192c0-35.2 28.8-64 64-64l576 0c35.2 0 64 28.8 64 64L832 768zM672 256l-256 0C398.08 256 384 270.08 384 288 384 305.92 398.08 320 416 320l256 0C689.92 320 704 305.92 704 288 704 270.08 689.92 256 672 256zM672 448l-256 0C398.08 448 384 462.08 384 480 384 497.92 398.08 512 416 512l256 0C689.92 512 704 497.92 704 480 704 462.08 689.92 448 672 448zM672 640l-256 0C398.08 640 384 654.08 384 672 384 689.92 398.08 704 416 704l256 0c17.92 0 32-14.08 32-32C704 654.08 689.92 640 672 640z"
-        p-id="3120"
-      ></path>
-    </svg>
-`;
 </script>
 <style lang="scss" scoped>
 #window-home {
@@ -182,6 +208,8 @@ const defaultSvg = `
   #window-home-footer {
     display: flex;
     z-index: 999999;
+    background-color: #ffffff;
+    color: #666666;
     .app-item {
       width: 40px;
       height: 40px;
@@ -202,5 +230,13 @@ const defaultSvg = `
       background-color: rgba($color: #000000, $alpha: 0.4);
     }
   }
+}
+</style>
+<style>
+svg.icon {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>
