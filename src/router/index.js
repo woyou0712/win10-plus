@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-import { getToken } from '@/assets/Token.js'
+import { getToken } from '@/utils/Token.js'
 
 const routes = [
   {

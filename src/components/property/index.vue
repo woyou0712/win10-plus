@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import formatTime from "@/assets/formatTime.js";
+import formatTime from "@/utils/formatTime.js";
 export default {
   id: "global-system-property", // 应用唯一标识
   name: "属性", // APP名称

@@ -48,7 +48,7 @@ const defaultSvg = `
       ></path>
     </svg>
 `;
-import { getUserInfo } from "@/assets/Token.js";
+import { getUserInfo } from "@/utils/Token.js";
 export default {
   id: "system-user-info", // 应用唯一标识
   name: "用户", // APP名称

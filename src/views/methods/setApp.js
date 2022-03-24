@@ -1,5 +1,5 @@
 const { reactive } = require("vue");
-const { getUserInfo } = require("@/assets/Token.js")
+const { getUserInfo } = require("@/utils/Token.js")
 const { userAppList } = require("@/apis/system/app.js")
 
 const homeAddrs = []; // 桌面所有的区域列表

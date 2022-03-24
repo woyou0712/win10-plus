@@ -3,7 +3,7 @@ import { ref, reactive } from "vue"
 import { getCode } from "@/apis/activate.js";
 //  用户登录, 获取用户信息
 import { login, userInfo } from "@/apis/system/user.js";
-import { setToken, setUserInfo } from "@/assets/Token.js";
+import { setToken, setUserInfo } from "@/utils/Token.js";
 import router from "@/router/index.js";
 import { ElMessage } from "element-plus"
 const accountKey = "account";

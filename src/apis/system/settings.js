@@ -1,4 +1,4 @@
-import service from "@/assets/service.js"
+import service from "@/utils/service.js"
 /**
  * 添加背景图片
  */

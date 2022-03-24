@@ -61,7 +61,7 @@ export default {
     const { leftList } = require("./option.js");
     const { winAddr, winLeftListStyle } = require("@/views/methods/setWin.js");
     const { footStyle } = require("@/views/methods/setFooter");
-    const { quitLogin } = require("@/assets/Token.js"); // 退出登录
+    const { quitLogin } = require("@/utils/Token.js"); // 退出登录
     const { openApp, appMap } = require("@/views/methods/openApp.js");
 
     return {
