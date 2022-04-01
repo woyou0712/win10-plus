@@ -8,6 +8,7 @@
         class="window-home-app-item"
         v-for="(item, index) in systemAppHome"
         :key="index"
+        :app-key="item.id"
         :app-name="item.name"
         :app-type="item.type"
         :app-url="item.url"
@@ -30,6 +31,7 @@
         class="window-home-app-item"
         v-for="(item, index) in userAppHome"
         :key="index"
+        :app-key="item.id"
         :app-name="item.name"
         :app-url="item.url"
         :app-id="item.app_id"
@@ -76,9 +78,12 @@
 
 <script>
 import { ref } from "vue";
-import WindowsWin from "@/components/Win/index.vue";
+import WindowsWin from "./Win/index.vue";
 import WinLogo from "@/assets/images/logo.png";
 import { Win } from "@/new-dream-plus/index.js";
+import { pullUserInfo } from "@/utils/Token.js";
+import { initAPP, sliceHome } from "./methods/setApp.js";
+import { initSettings } from "./methods/settingStyle.js";
 let sliceHomeTime = null; // 窗口大小变化防抖装置
 export default {
   components: { "windows-win": WindowsWin },
@@ -91,9 +96,6 @@ export default {
       appIconSize,
       systemAppHome,
       userAppHome,
-      initSystemApp,
-      initUserApp,
-      sliceHome,
     } = require("./methods/setApp.js");
     const {
       openApp,
@@ -104,8 +106,6 @@ export default {
     /**
      * 个性化
      */
-    // 设置
-    const { initSettings } = require("./methods/settingStyle.js");
     // 桌面
     const { bgStyle } = require("./methods/setHome.js");
     // 任务栏
@@ -116,16 +116,12 @@ export default {
     const isShowWin = ref(false);
     return {
       // 个性化样式
-      initSettings, // 初始化个人设置
       bgStyle, // 背景样式
       footStyle, // 任务栏样式
       // 桌面应用
       appIconSize, // 应用图标大小
       systemAppHome,
       userAppHome,
-      initSystemApp, // 初始化个人应用
-      initUserApp, // 初始化系统应用
-      sliceHome, // 切割桌面，放置APP
       openApp, // 打开应用
       setTopApp, // 置顶应用
       openAppList, // 打开的应用列表
@@ -148,17 +144,13 @@ export default {
   },
   async mounted() {
     // 个性化设置
-    await this.initSettings();
-    // 桌面应用
-    this.initSystemApp(); // 初始化系统应用
-    await this.initUserApp(); // 初始化个人应用
-    // 切割网格
-    this.sliceHome();
+    await initSettings();
+    await initAPP();
     // 监听窗口大小变化 防抖设置
     window.onresize = () => {
       clearTimeout(sliceHomeTime);
       sliceHomeTime = setTimeout(() => {
-        this.sliceHome();
+        sliceHome();
       }, 150);
     };
   },
@@ -238,5 +230,18 @@ svg.icon {
   height: 100%;
   fill: currentColor;
   overflow: hidden;
+}
+.text-btn {
+  color: #409eff;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+.text-btn:hover {
+  color: #66b1ff;
+}
+.text-btn + .text-btn {
+  margin-left: 10px;
 }
 </style>

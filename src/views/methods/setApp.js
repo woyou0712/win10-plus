@@ -1,6 +1,6 @@
 const { reactive } = require("vue");
-const { getUserInfo } = require("@/utils/Token.js")
-const { userAppList } = require("@/apis/system/app.js")
+const { getUserInfo } = require("@/utils/Token.js");
+const { userAppList } = require("@/apis/system/app.js");
 
 const homeAddrs = []; // 桌面所有的区域列表
 
@@ -31,14 +31,14 @@ export function sliceHome() {
       })
     }
   }
-  __setSystemAppAddr();
-  __setUserAppAddr();
+  setSystemAppAddr();
+  setUserAppAddr();
 };
 
 /**
  * 设置桌面系统应用所在位置
  */
-function __setSystemAppAddr() {
+export function setSystemAppAddr() {
   for (var i = 0; i < systemAppHome.length && i < homeAddrs.length; i++) {
     let app = systemAppHome[i];
     app.left = homeAddrs[i].left;
@@ -49,7 +49,7 @@ function __setSystemAppAddr() {
 /**
  * 设置桌面个人应用所在位置
  */
-function __setUserAppAddr() {
+export function setUserAppAddr() {
   // 排列在系统应用之后
   for (var i = systemAppHome.length, n = 0; n < userAppHome.length && i < homeAddrs.length; i++, n++) {
     let app = userAppHome[n];
@@ -59,9 +59,9 @@ function __setUserAppAddr() {
 }
 
 /**
- * 初始化 系统应用
+ * 初始化 角色拥有的 系统应用
  */
-export function initSystemApp() {
+function __initSystemApp() {
   // 1. 获取用户角色绑定的系统应用列表
   let user = getUserInfo();
   let systemApps = user.Role.apps ? user.Role.apps : [];
@@ -77,9 +77,9 @@ export function initSystemApp() {
 }
 
 /**
- * 初始化 个人应用
+ * 拉取 个人应用
  */
-export function initUserApp() {
+function __pullUserApp() {
   return new Promise(async (next, error) => {
     try {
       // 1. 获取应用列表
@@ -96,4 +96,20 @@ export function initUserApp() {
       error(err)
     }
   })
+}
+import { pullUserInfo } from "@/utils/Token.js";
+export function initAPP() {
+  return new Promise(async (next, error) => {
+    try {
+      await pullUserInfo(); // 初始化 个人信息
+      await __pullUserApp(); // 拉取 个人应用
+      __initSystemApp(); // 初始化系统应用
+      // 切割桌面网格 放置APP
+      sliceHome();
+      next()
+    } catch (err) {
+      error(err)
+    }
+  })
+
 }

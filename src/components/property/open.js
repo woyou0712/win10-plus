@@ -22,7 +22,6 @@ function __getApp(app_id) {
 }
 export function openProperty(appId) {
   let app = __getApp(appId);
-  console.log(app)
   let option = {
     id: app.id,
     icon,
@@ -35,6 +34,6 @@ export function openProperty(appId) {
     component: property,
     props: { app }
   }
-  openSelfApp(option)
+  return openSelfApp(option)
 }
 

@@ -1,12 +1,11 @@
 import COS from "./cos-js-sdk-v5.min.js"
-import { getSettingsCosKey } from "@/apis/system.js"
+import { getCosKey } from "@/apis/system/cos.js"
 
-export function initCos() {
+export function initCos(path) {
   return new COS({
     getAuthorization: function (options, callback) {
-      getSettingsCosKey().then(({ data }) => {
+      getCosKey({ path }).then(({ data }) => {
         var credentials = data.credentials;
-        console.log(data, credentials)
         if (!data || !credentials) return console.error('credentials invalid');
         callback({
           TmpSecretId: credentials.tmpSecretId,
@@ -17,5 +16,5 @@ export function initCos() {
         });
       })
     }
-  });
+  })
 }

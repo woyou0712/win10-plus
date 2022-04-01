@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { getToken, quitLogin } from './Token.js';
+import { getToken, toQuitLogin } from './Token.js';
 import { getUUID } from "./UUID.js";
-import { ElMessage } from "element-plus";
+import { Message } from "@/new-dream-plus"
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -47,7 +47,6 @@ service.interceptors.request.use(config => {
   }
   return config
 }, error => {
-  console.log(error)
   Promise.reject(error)
 })
 
@@ -59,9 +58,9 @@ service.interceptors.response.use(res => {
     return res.data
   }
   if (code === -1) {
-    quitLogin()
+    toQuitLogin()
   }
-  ElMessage.error(res.data.msg)
+  Message.error(res.data.msg)
   return Promise.reject('error')
 },
   error => {

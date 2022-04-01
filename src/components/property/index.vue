@@ -29,7 +29,7 @@
         <div class="label">
           <div class="text">应用类型：</div>
         </div>
-        <div class="data">{{ app.type == 1 ? "内部组件" : "外部链接" }}</div>
+        <div class="data">{{ app.type == 1 ? "内置组件" : "外部链接" }}</div>
       </div>
       <div class="item" v-if="app.url">
         <div class="label">

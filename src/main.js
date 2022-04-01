@@ -5,13 +5,11 @@ import store from './store'
 
 
 import NewDreamPlus from "@/new-dream-plus/index.js";
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 
 
 
 
-createApp(App).use(store).use(router).use(ElementPlus).use(NewDreamPlus).mount('#app');
+createApp(App).use(store).use(router).use(NewDreamPlus).mount('#app');
 
 
 

@@ -10,13 +10,3 @@ import service from "@/utils/service.js"
     method: "get"
   })
 }
-
-/**
- * 获取系统设置文件上传临时Key
- */
- export function getSettingsCosKey() {
-  return service({
-    url: "/system/cos/systemKey",
-    method: "get"
-  })
-}

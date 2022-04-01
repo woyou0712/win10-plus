@@ -22,7 +22,7 @@
         <div class="title">上传图片</div>
         <div class="images">
           <div class="img-item upload">
-            <input class="file-selector" type="file" @change="uploadImage" />
+            <input class="file-selector" type="file" @change="uploadBgImage" />
             <svg
               t="1647057135915"
               class="icon"
@@ -73,6 +73,8 @@
 <script>
 import { ref } from "vue";
 import leftTable from "./leftTable.vue";
+import { uploadImage } from "@/utils/uploadFile.js";
+import { getUserInfo } from "@/utils/Token.js";
 export default {
   components: { "left-table": leftTable },
   id: "global-system-style-settings", // 应用唯一标识
@@ -80,8 +82,8 @@ export default {
   width: "1000px",
   height: "720px",
   miniBtn: true, // 是否显示最小化按钮
-  maxBtn: true, // 是否显示最大化按钮
-  resize: true, // 是否可缩放
+  maxBtn: false, // 是否显示最大化按钮
+  resize: false, // 是否可缩放
   setup() {
     const menuId = ref(1),
       menusList = [
@@ -102,7 +104,6 @@ export default {
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
       bgColors, // 背景颜色列表
-      uploadImage, // 上传背景图片
     } = require("@/views/methods/setHome.js");
     const {
       footStyle, // 任务栏
@@ -115,12 +116,34 @@ export default {
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
       bgColors, // 背景颜色列表
-      uploadImage, // 上传背景图片
-
       footStyle,
       footBgColors,
       setStyle, // 设置
     };
+  },
+  data() {
+    return {
+      userInfo: {},
+    };
+  },
+  mounted() {
+    this.userInfo = getUserInfo();
+  },
+  methods: {
+    uploadBgImage(e) {
+      let el = e.target;
+      let file = el.files[0];
+      if (!file) {
+        return;
+      }
+      uploadImage(file, `system/settings/${this.userInfo.account}`)
+        .then(() => {
+          el.value = null;
+        })
+        .catch(() => {
+          el.value = null;
+        });
+    },
   },
 };
 </script>
@@ -217,6 +240,8 @@ export default {
         flex-wrap: wrap;
         min-height: 60px;
         .img-item {
+          border: 1px solid #eeeeee;
+          background-color: #f5f5f5;
           cursor: pointer;
           margin-left: 15px;
           margin-top: 15px;

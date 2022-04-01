@@ -1,5 +1,9 @@
 import service from "@/utils/service.js"
 /**
+ * --------------------------------------------  设置 --------------------------------------------
+ */
+
+/**
  * 添加背景图片
  */
 export function systemBgAdd(url) {

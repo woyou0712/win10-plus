@@ -34,7 +34,6 @@ export function initSettings() {
 import { setBg } from "./setHome.js"
 import { setFooterDirection, setFooterColor } from "./setFooter.js"
 export function setStyle(option, isInit) {
-  console.log(isInit)
   let { bg_type, bg_id, footer_direction, footer_bg_id } = option;
   // 设置背景
   if ((bg_type || bg_type === 0) && (bg_id || bg_id === 0)) {

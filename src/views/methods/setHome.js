@@ -2,13 +2,11 @@
  * ---------------------------------------------------  桌面  ---------------------------------------------------
  */
 import { reactive } from "vue";
-import { initCos } from "@/cos/index.js";
+
 import { systemBgList } from "@/apis/system/settings.js"
 import defaultBg from "@/assets/images/bg_1.jpeg"; // 默认背景图片
 
-const cos = initCos();
-const Bucket = 'goods-1256120257';
-const Region = 'ap-nanjing';
+
 
 /**
  * 背景图片列表
@@ -49,7 +47,7 @@ export const bgStyle = reactive({
 // 获取背景列表
 export function pullBgList() {
   return new Promise((next, error) => {
-    bgImages.splice(1); // 清空缓存之外的背景
+    bgImages.splice(1); // 清空基础背景之外的背景图片
     systemBgList().then(res => {
       bgImages.push(...res.data)
       next()
@@ -59,40 +57,7 @@ export function pullBgList() {
   })
 }
 
-/**
- * 上传背景图片
- */
-export function uploadImage(e) {
-  let el = e.target
-  var file = el.files[0];
-  if (!file) return;
-  let prefix = `${Date.now()}-${file.name}`
-  // 分片上传文件
-  cos.sliceUploadFile(
-    {
-      Bucket: Bucket,
-      Region: Region,
-      Key: `system/settings/${prefix}`, // 此处的key是上传到储存桶后的文件名称,也是获取零时key的时候后端需要的prefix
-      Body: file,
-      onHashProgress: function (progressData) {
-        console.log('校验中', JSON.stringify(progressData));
-      },
-      onProgress: function (progressData) {
-        console.log('上传中', JSON.stringify(progressData));
-      },
-    },
-    function (err, data) {
-      if (err) {
-        return console.error(err)
-      }
-      systemBgAdd(`${window.WINDOWS_CONFIG.cosUrl}/${data.Key}`).then(() => {
-        el.value = null
-        pullBgList()
-      })
-    }
-  );
 
-}
 
 /**
  * 设置背景 

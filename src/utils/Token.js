@@ -1,5 +1,5 @@
-import { adminQuitLogin } from "../apis/system.js"
-import router from "../router/index.js";
+import { quitLogin, userInfo } from "@/apis/system/user.js"
+import router from "@/router/index.js";
 const TokenKey = "token";
 const userInfoKey = "userInfo"
 
@@ -27,7 +27,7 @@ export function getUserInfo() {
 }
 
 
-export function setUserInfo(user) {
+function setUserInfo(user) {
   if (user && user.account) {
     user = JSON.stringify(user)
   }
@@ -39,9 +39,8 @@ export function removeInfo() {
 }
 
 
-export function quitLogin() {
-
-  adminQuitLogin().then(() => {
+export function toQuitLogin() {
+  quitLogin().then(() => {
     removeToken();
     removeInfo();
     router.push({ path: "/login" })
@@ -49,7 +48,14 @@ export function quitLogin() {
   })
 }
 
-export function getUserMenus() {
-  let user = getUserInfo()
-  return user.menus || []
+export function pullUserInfo() {
+  return new Promise(async (next, error) => {
+    try {
+      let { data } = await userInfo();
+      setUserInfo(data)
+      next(data)
+    } catch (err) {
+      error(err)
+    }
+  })
 }

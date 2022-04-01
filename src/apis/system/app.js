@@ -51,7 +51,15 @@ export function userAppDelete(id) {
   })
 }
 
-
+/**
+ * 删除桌面快捷方式
+ */
+ export function userAppShortcut(id) {
+  return service({
+    url: `/system/userApp/shortcut/${id}`,
+    method: "delete",
+  })
+}
 
 
 /**
@@ -98,11 +106,11 @@ export function systemAppEdit(data) {
   })
 }
 /**
- * 系统应用 是否在桌面显示
+ * 删除桌面快捷方式
  */
-export function systemAppShowHome(id) {
+export function systemAppShortcut(id) {
   return service({
-    url: `/system/app/showHome/${id}`,
-    method: "put"
+    url: `/system/app/shortcut/${id}`,
+    method: "delete",
   })
 }
