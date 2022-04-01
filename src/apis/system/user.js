@@ -1,10 +1,8 @@
 import service from "@/utils/service.js"
 /**
  * 登录
- * @param {Object} data 
- * @returns 
  */
- export function login(data) {
+export function login(data) {
   return service({
     url: "/system/user/login",
     method: "post",
@@ -25,8 +23,7 @@ export function quitLogin() {
 
 
 /**
- * 获取用户信息
- * @returns 
+ * 获取自身信息
  */
 export function userInfo() {
   return service({
@@ -34,4 +31,25 @@ export function userInfo() {
     method: "get"
   })
 }
+/**
+ * 修改自身信息
+ */
+export function userEditInfo(data) {
+  return service({
+    url: "/system/user/editInfo",
+    method: "put",
+    data
+  })
 
+}
+
+/**
+ * 修改自身密码
+ */
+export function userEditPassword(data) {
+  return service({
+    url: "/system/user/editPassword",
+    method: "put",
+    data
+  })
+}

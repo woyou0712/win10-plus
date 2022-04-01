@@ -244,4 +244,52 @@ svg.icon {
 .text-btn + .text-btn {
   margin-left: 10px;
 }
+.btn {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: 0.1s;
+  font-weight: 500;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.btn + .btn {
+  margin-left: 10px;
+}
+.btn:focus,
+.btn:hover {
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+.btn.primary {
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+}
+.btn:focus,
+.btn:hover {
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+.btn.primary:focus,
+.btn.primary:hover {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
 </style>

@@ -19,7 +19,7 @@
     <tbody>
       <tr v-for="item in appList" :key="item.id">
         <td><div class="name nowrap" v-text="item.name"></div></td>
-        <td><div class="id nowrap" v-text="item.url"></div></td>
+        <td><div class="url nowrap" v-text="item.url"></div></td>
         <td>
           <div class="home" v-text="item.show_home === 1 ? '是' : '否'"></div>
         </td>
@@ -92,8 +92,11 @@ table {
     td {
       text-align: center;
     }
-    .nowrap {
+    .name {
       width: 150px;
+    }
+    .url{
+      width: 240px;
     }
     div {
       padding: 5px 10px;

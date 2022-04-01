@@ -75,6 +75,7 @@ import { ref } from "vue";
 import leftTable from "./leftTable.vue";
 import { uploadImage } from "@/utils/uploadFile.js";
 import { getUserInfo } from "@/utils/Token.js";
+import { systemBgAdd } from "@/apis/system/settings.js";
 export default {
   components: { "left-table": leftTable },
   id: "global-system-style-settings", // 应用唯一标识
@@ -104,6 +105,7 @@ export default {
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
       bgColors, // 背景颜色列表
+      pullBgList,
     } = require("@/views/methods/setHome.js");
     const {
       footStyle, // 任务栏
@@ -116,6 +118,7 @@ export default {
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
       bgColors, // 背景颜色列表
+      pullBgList,
       footStyle,
       footBgColors,
       setStyle, // 设置
@@ -136,13 +139,23 @@ export default {
       if (!file) {
         return;
       }
+      // 上传图片
       uploadImage(file, `system/settings/${this.userInfo.account}`)
-        .then(() => {
+        .then((data) => {
           el.value = null;
+          // 添加到背景
+          this.addBg(data);
         })
         .catch(() => {
           el.value = null;
         });
+    },
+    // 将图片添加到背景列表
+    addBg(data) {
+      systemBgAdd(`${window.WINDOWS_CONFIG.cosUrl}/${data.Key}`).then(() => {
+        // 重新获取背景列表
+        this.pullBgList();
+      });
     },
   },
 };

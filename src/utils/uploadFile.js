@@ -1,5 +1,4 @@
 import { initCos } from "@/cos/index.js";
-import { systemBgAdd } from "@/apis/system/settings.js"
 const Bucket = 'goods-1256120257';
 const Region = 'ap-nanjing';
 /**
@@ -8,7 +7,7 @@ const Region = 'ap-nanjing';
 export function uploadImage(file, path) {
   if (!file) return;
   let key = `${path}/${Date.now()}-${file.name}`
-  const cos = initCos({ path });
+  const cos = initCos(path);
   return new Promise((next, error) => {
     // 分片上传文件
     cos.sliceUploadFile(
@@ -29,10 +28,7 @@ export function uploadImage(file, path) {
           error(err)
           return console.error(err)
         }
-        console.log(data)
-        systemBgAdd(`${window.WINDOWS_CONFIG.cosUrl}/${data.Key}`).then(() => {
-          next()
-        })
+        next(data)
       }
     );
   })
