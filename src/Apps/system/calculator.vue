@@ -17,77 +17,77 @@
       <table>
         <tr>
           <td>
-            <div class="btn s" @click="setStorage">储存</div>
+            <div class="num-button s" @click="setStorage">储存</div>
           </td>
           <td>
-            <div class="btn s" @click="getStorage">取存</div>
+            <div class="num-button s" @click="getStorage">取存</div>
           </td>
           <td>
-            <div class="btn s" @click="del">退格</div>
+            <div class="num-button s" @click="del">退格</div>
           </td>
           <td>
-            <div class="btn s" @click="clear">清屏</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="btn l" @click="plusOrMinus">±</div>
-          </td>
-          <td>
-            <div class="btn l" @click="userInput('/')">÷</div>
-          </td>
-          <td>
-            <div class="btn l" @click="userInput('*')">×</div>
-          </td>
-          <td>
-            <div class="btn l" @click="userInput('-')">-</div>
+            <div class="num-button s" @click="clear">清屏</div>
           </td>
         </tr>
         <tr>
           <td>
-            <div class="btn m" @click="userInput(7)">7</div>
+            <div class="num-button l" @click="plusOrMinus">±</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(8)">8</div>
+            <div class="num-button l" @click="userInput('/')">÷</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(9)">9</div>
+            <div class="num-button l" @click="userInput('*')">×</div>
+          </td>
+          <td>
+            <div class="num-button l" @click="userInput('-')">-</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="num-button m" @click="userInput(7)">7</div>
+          </td>
+          <td>
+            <div class="num-button m" @click="userInput(8)">8</div>
+          </td>
+          <td>
+            <div class="num-button m" @click="userInput(9)">9</div>
           </td>
           <td rowspan="2">
-            <div class="btn l" @click="userInput('+')">+</div>
+            <div class="num-button l" @click="userInput('+')">+</div>
           </td>
         </tr>
         <tr>
           <td>
-            <div class="btn m" @click="userInput(4)">4</div>
+            <div class="num-button m" @click="userInput(4)">4</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(5)">5</div>
+            <div class="num-button m" @click="userInput(5)">5</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(6)">6</div>
+            <div class="num-button m" @click="userInput(6)">6</div>
           </td>
         </tr>
         <tr>
           <td>
-            <div class="btn m" @click="userInput(1)">1</div>
+            <div class="num-button m" @click="userInput(1)">1</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(2)">2</div>
+            <div class="num-button m" @click="userInput(2)">2</div>
           </td>
           <td>
-            <div class="btn m" @click="userInput(3)">3</div>
+            <div class="num-button m" @click="userInput(3)">3</div>
           </td>
           <td rowspan="2">
-            <div class="btn submit l" @click="submit">=</div>
+            <div class="num-button submit l" @click="submit">=</div>
           </td>
         </tr>
         <tr>
           <td colspan="2">
-            <div class="btn m" @click="userInput(0)">0</div>
+            <div class="num-button m" @click="userInput(0)">0</div>
           </td>
           <td>
-            <div class="btn l" @click="userInput('.')">.</div>
+            <div class="num-button l" @click="userInput('.')">.</div>
           </td>
         </tr>
       </table>
@@ -105,7 +105,6 @@ export default {
   miniBtn: true, // 是否显示最小化按钮
   maxBtn: false, // 是否显示最大化按钮
   resize: false, // 是否可缩放
-  showHome: true, // 是否在桌面显示
   data() {
     return {
       isSubmit: false, // 是否提交过
@@ -268,7 +267,7 @@ export default {
         td {
           height: 50px;
           padding: 5px;
-          .btn {
+          .num-button {
             width: 100%;
             height: 100%;
             display: flex;
@@ -282,11 +281,11 @@ export default {
             transition: 0.2s;
             cursor: pointer;
           }
-          .btn:active {
+          .num-button:active {
             box-shadow: none;
             transform: translateY(1px);
           }
-          .btn.submit {
+          .num-button.submit {
             background-color: #409eff;
             color: #ffffff;
           }

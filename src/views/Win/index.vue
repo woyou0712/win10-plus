@@ -45,6 +45,7 @@ export default {
 
     const { openApp } = require("@/views/methods/openApp.js");
     const { systemAppAll, userAppAll } = require("@/views/methods/setApp.js");
+
     return {
       // 位置样式
       winAddr,
@@ -65,11 +66,12 @@ export default {
         color: this.footStyle.color,
       };
     },
+
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .windows-win {
   width: 380px;
   height: 600px;

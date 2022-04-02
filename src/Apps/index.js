@@ -1,5 +1,5 @@
 
-const req = require.context('./system', false, /\.vue$/)
+const req = require.context('./system', true, /\.vue$/)
 const requireAll = requireContext => requireContext.keys().map(requireContext)
 const apps = requireAll(req)
 

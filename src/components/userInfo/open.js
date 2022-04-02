@@ -21,7 +21,6 @@ export function openUserInfo() {
     height: userInfo.height,
     miniBtn: userInfo.miniBtn,
     maxBtn: userInfo.maxBtn,
-    showHome: userInfo.showHome,
     resize: userInfo.resize,
     component: userInfo,
   }

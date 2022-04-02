@@ -81,7 +81,6 @@ import { ref } from "vue";
 import WindowsWin from "./Win/index.vue";
 import WinLogo from "@/assets/images/logo.png";
 import { Win } from "@/new-dream-plus/index.js";
-import { pullUserInfo } from "@/utils/Token.js";
 import { initAPP, sliceHome } from "./methods/setApp.js";
 import { initSettings } from "./methods/settingStyle.js";
 let sliceHomeTime = null; // 窗口大小变化防抖装置
@@ -244,7 +243,7 @@ svg.icon {
 .text-btn + .text-btn {
   margin-left: 10px;
 }
-.btn {
+button.btn {
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
@@ -266,28 +265,28 @@ svg.icon {
   font-size: 14px;
   border-radius: 4px;
 }
-.btn + .btn {
+button.btn + button.btn {
   margin-left: 10px;
 }
-.btn:focus,
-.btn:hover {
+button.btn:focus,
+button.btn:hover {
   color: #409eff;
   border-color: #c6e2ff;
   background-color: #ecf5ff;
 }
-.btn.primary {
+button.btn.primary {
   color: #fff;
   background-color: #409eff;
   border-color: #409eff;
 }
-.btn:focus,
-.btn:hover {
+button.btn:focus,
+button.btn:hover {
   color: #409eff;
   border-color: #c6e2ff;
   background-color: #ecf5ff;
 }
-.btn.primary:focus,
-.btn.primary:hover {
+button.btn.primary:focus,
+button.btn.primary:hover {
   background: #66b1ff;
   border-color: #66b1ff;
   color: #fff;

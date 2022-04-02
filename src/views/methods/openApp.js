@@ -105,7 +105,6 @@ export function openApp(option) {
     return console.warn("argument is not App"); // 参数不是App元素或者索引
   }
   option = __appOption(option)
-  console.log("app option", option)
   if (!option) {
     Message.error("应用数据异常！")
     return

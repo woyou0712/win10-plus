@@ -33,8 +33,10 @@ export function uploadPicture(e) {
 /**
  * 提交修改信息
  */
+import { pullUserInfo } from "@/utils/Token.js";
 export function submitEditInfo() {
   userEditInfo(userInfo).then(() => {
+    pullUserInfo();
     new Message("保存成功！")
   })
 }
@@ -54,9 +56,4 @@ export function submitEditPassword(form) {
   userEditPassword(form).then(() => {
     new Message("修改成功！")
   })
-}
-
-
-export function setRole(params) {
-
 }

@@ -1,7 +1,9 @@
 const { toQuitLogin } = require("@/utils/Token.js"); // 退出登录
 import { settingsIcon, openStyleSetting } from "@/components/settings/system.js"
 import { userIcon, openUserInfo } from "@/components/userInfo/open.js"
-export const leftList = [
+import { reactive } from "vue";
+import { getUserInfo } from "@/utils/Token.js";
+export const leftList = reactive([
   {
     name: "退出",
     icon: `<svg
@@ -32,4 +34,16 @@ export const leftList = [
     icon: userIcon,
     fn: openUserInfo
   },
-];
+]);
+
+export function initWinMenu() {
+  let { picture, account, name } = getUserInfo();
+  if (name) {
+    leftList[2].name = name
+  } else if (account) {
+    leftList[2].name = account
+  }
+  if (picture) {
+    leftList[2].icon = `<img class="icon" src="${picture}"/>`;
+  }
+}

@@ -34,23 +34,22 @@ export function openAddSystemApp({ parentId, form, getList }) {
     height: addApp.height,
     miniBtn: addApp.miniBtn,
     maxBtn: addApp.maxBtn,
-    showHome: addApp.showHome,
     resize: addApp.resize,
     component: addApp,
     props
   }
-
+  let addSystemAppWin = openSelfApp(option)
   function submit(form) {
     let apis = form && form.id ? systemAppEdit : systemAppAdd;
     apis(form).then(() => {
       // 关闭添加系统应用窗口
-      this.addSystemAppWin.close();
+      addSystemAppWin.close();
       // 释放内存
-      this.addSystemAppWin = null;
+      addSystemAppWin = null;
       if (typeof getList === "function") { getList() }
       initAPP();
     });
   }
 
-  return openSelfApp(option)
+  return addSystemAppWin
 }

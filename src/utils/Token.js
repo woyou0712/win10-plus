@@ -47,12 +47,13 @@ export function toQuitLogin() {
   }).catch(() => {
   })
 }
-
+import { initWinMenu } from "@/views/Win/option.js";
 export function pullUserInfo() {
   return new Promise(async (next, error) => {
     try {
       let { data } = await userInfo();
       setUserInfo(data)
+      initWinMenu() // win菜单数据更新
       next(data)
     } catch (err) {
       error(err)

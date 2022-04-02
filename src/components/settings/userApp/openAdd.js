@@ -37,7 +37,6 @@ export function openAddUserApp({ parentId, form, getList }) {
     height: addApp.height,
     miniBtn: addApp.miniBtn,
     maxBtn: addApp.maxBtn,
-    showHome: addApp.showHome,
     resize: addApp.resize,
     component: addApp,
     props

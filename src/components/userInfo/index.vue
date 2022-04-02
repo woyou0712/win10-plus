@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="data nowrap">
-          <span v-text="userInfo.account"></span>
+          <span class="item-text" v-text="userInfo.account"></span>
         </div>
       </div>
       <!-- 基本信息 -->
@@ -26,8 +26,8 @@
         <div class="data nowrap">
           <span
             v-show="editItme != item.id"
-            @dblclick="editItme = item.id"
-            class="item-text"
+            @click="editItme = item.id"
+            class="item-text ipt"
             v-text="userInfo[item.key]"
           ></span>
           <input
@@ -43,18 +43,7 @@
       <div class="item">
         <div class="label"><div class="text">用户组：</div></div>
         <div class="data nowrap">
-          <span
-            v-show="editItme != 100"
-            @dblclick="editItme = 100"
-            class="item-text"
-            v-text="userInfo['role_name']"
-          ></span>
-          <select
-            v-show="editItme == 100"
-            @blur="editItme = null"
-            name="role_id"
-            @change="setRole"
-          ></select>
+          <span class="item-text" v-text="userInfo['role_name']"></span>
         </div>
       </div>
       <div class="item">
@@ -124,7 +113,6 @@ export default {
     const {
       userInfo,
       uploadPicture,
-      setRole,
       submitEditInfo,
       submitEditPassword,
     } = require("./setInfo.js");
@@ -151,7 +139,6 @@ export default {
       userInfo,
       userIcon,
       uploadPicture,
-      setRole,
       submitEditInfo,
       submitEditPassword,
     };
@@ -202,6 +189,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 10px 0;
+      min-height: 47px;
       + .item {
         border-top: 1px solid #808080;
       }
@@ -235,11 +223,15 @@ export default {
         width: calc(100% - 120px);
         .item-text {
           padding: 5px 0;
+          cursor: default;
         }
         .item-input {
           border: none;
           padding: 5px 10px;
           width: 100%;
+        }
+        .ipt {
+          cursor: text;
         }
         .item-input:focus-visible {
           outline: none;

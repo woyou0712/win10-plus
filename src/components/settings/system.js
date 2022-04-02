@@ -20,7 +20,6 @@ export function openStyleSetting() {
     height: systemSettings.height,
     miniBtn: systemSettings.miniBtn,
     maxBtn: systemSettings.maxBtn,
-    showHome: systemSettings.showHome,
     resize: systemSettings.resize,
     component: systemSettings,
   }
