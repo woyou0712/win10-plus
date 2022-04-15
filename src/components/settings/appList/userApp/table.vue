@@ -2,16 +2,14 @@
   <table style="width: 680px">
     <colgroup>
       <col width="150px" />
-      <col width="90px" />
-      <col width="150px" />
+      <col width="240px" />
       <col width="90px" />
       <col width="200px" />
     </colgroup>
     <thead>
       <tr>
         <th>名称</th>
-        <th>类型</th>
-        <th>APPID</th>
+        <th>网络地址</th>
         <th>快捷方式</th>
         <th>
           <span class="text-btn" @click="toAddSystemApp">+安装应用</span>
@@ -21,13 +19,7 @@
     <tbody>
       <tr v-for="item in appList" :key="item.id">
         <td><div class="name nowrap" v-text="item.name"></div></td>
-        <td>
-          <div
-            class="type"
-            v-text="item.type === 1 ? '内置组件' : '外部链接'"
-          ></div>
-        </td>
-        <td><div class="id nowrap" v-text="item.app_id"></div></td>
+        <td><div class="url nowrap" v-text="item.url"></div></td>
         <td>
           <div class="home" v-text="item.show_home === 1 ? '是' : '否'"></div>
         </td>
@@ -41,12 +33,12 @@
 </template>
 
 <script>
-import { openAddSystemApp } from "./openAdd.js";
-import { systemAppDelete } from "@/apis/system/app.js";
+import { openAddUserApp } from "./openAdd.js";
+import { userAppDelete } from "@/apis/system/app.js";
 import { Message, MessageBox } from "@/new-dream-plus";
 import { onMounted } from "@vue/runtime-core";
 import { initAPP } from "@/views/methods/setApp.js";
-const parentId = "system-settings";
+const parentId = "system-settings-app-list";
 export default {
   setup() {
     const { appList, pullAppList } = require("./table.js");
@@ -67,7 +59,7 @@ export default {
       if (form && form.id) {
         option.form = Object.assign({}, form);
       }
-      this.addSystemAppWin = openAddSystemApp(option);
+      this.addSystemAppWin = openAddUserApp(option);
     },
     // 删除
     deleteApp(id) {
@@ -75,7 +67,7 @@ export default {
         msg: "确定卸载该应用吗？",
         parentId,
       }).submit(() => {
-        systemAppDelete(id).then(() => {
+        userAppDelete(id).then(() => {
           new Message("卸载成功");
           this.pullAppList();
           initAPP();
@@ -100,8 +92,11 @@ table {
     td {
       text-align: center;
     }
-    .nowrap {
+    .name {
       width: 150px;
+    }
+    .url{
+      width: 240px;
     }
     div {
       padding: 5px 10px;

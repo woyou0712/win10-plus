@@ -1,5 +1,5 @@
 <template>
-  <div class="system-setting">
+  <div class="global-system-style-settings">
     <left-table v-model="menuId" :menusList="menusList">个性化</left-table>
     <div class="set-right">
       <div class="windows">
@@ -71,8 +71,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import leftTable from "./leftTable.vue";
+import leftTable from "../leftTable.vue";
 import { uploadImage } from "@/utils/uploadFile.js";
 import { getUserInfo } from "@/utils/Token.js";
 import { systemBgAdd } from "@/apis/system/settings.js";
@@ -86,21 +85,6 @@ export default {
   maxBtn: false, // 是否显示最大化按钮
   resize: false, // 是否可缩放
   setup() {
-    const menuId = ref(1),
-      menusList = [
-        {
-          id: 1,
-          name: "背景图片",
-        },
-        {
-          id: 2,
-          name: "背景颜色",
-        },
-        {
-          id: 3,
-          name: "主题颜色",
-        },
-      ];
     const {
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
@@ -113,8 +97,6 @@ export default {
     } = require("@/views/methods/setFooter.js");
     const { setStyle } = require("@/views/methods/settingStyle.js");
     return {
-      menuId, // 当前显示的菜单
-      menusList,
       bgStyle, // 背景样式
       bgImages, // 背景图片列表
       bgColors, // 背景颜色列表
@@ -126,6 +108,22 @@ export default {
   },
   data() {
     return {
+      menuId: 1,// 当前显示的菜单
+      // 菜单列表
+      menusList: [
+        {
+          id: 1,
+          name: "背景图片",
+        },
+        {
+          id: 2,
+          name: "背景颜色",
+        },
+        {
+          id: 3,
+          name: "主题颜色",
+        },
+      ],
       userInfo: {},
     };
   },
@@ -162,7 +160,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.system-setting {
+.global-system-style-settings {
   width: 100%;
   height: 100%;
   display: flex;

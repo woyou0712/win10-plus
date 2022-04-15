@@ -1,6 +1,6 @@
 <template>
-  <div class="system-setting">
-    <set-left v-model="menuId" :menusList="menusList">应用管理</set-left>
+  <div class="system-settings-app-list">
+    <left-table v-model="menuId" :menusList="menusList">应用管理</left-table>
     <div class="set-right">
       <system-app-table v-show="menuId == 1" />
       <user-app-table v-show="menuId == 2" />
@@ -9,18 +9,17 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import setLeft from "./leftTable.vue";
+import leftTable from "../leftTable.vue";
 import systemAppTable from "./systemApp/table.vue";
 import userAppTable from "./userApp/table.vue";
 
 export default {
   components: {
-    "set-left": setLeft,
+    "left-table": leftTable,
     "system-app-table": systemAppTable,
     "user-app-table": userAppTable,
   },
-  id: "system-settings", // 应用唯一标识
+  id: "system-settings-app-list", // 应用唯一标识
   name: "系统", // APP名称
   width: "1000px",
   height: "720px",
@@ -28,8 +27,12 @@ export default {
   maxBtn: false, // 是否显示最大化按钮
   resize: false, // 是否可缩放
   setup() {
-    const menuId = ref(1),
-      menusList = [
+    return {};
+  },
+  data() {
+    return {
+      menuId: 1,
+      menusList: [
         {
           id: 1,
           name: "系统应用",
@@ -38,17 +41,14 @@ export default {
           id: 2,
           name: "个人应用",
         },
-      ];
-    return {
-      menuId,
-      menusList, // 左侧菜单列表
+      ],
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.system-setting {
+.system-settings-app-list {
   width: 100%;
   height: 100%;
   display: flex;

@@ -82,7 +82,7 @@
 import { reactive } from "vue";
 export default {
   id: "system-add-app",
-  parentId: "system-settings",
+  parentId: "system-settings-app-list",
   name: "系统应用",
   width: "400px",
   height: "355px",

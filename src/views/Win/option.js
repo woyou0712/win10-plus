@@ -1,5 +1,5 @@
 const { toQuitLogin } = require("@/utils/Token.js"); // 退出登录
-import { settingsIcon, openStyleSetting } from "@/components/settings/system.js"
+import { appsIcon, openAppList } from "@/components/settings/appList/open.js"
 import { userIcon, openUserInfo } from "@/components/userInfo/open.js"
 import { reactive } from "vue";
 import { getUserInfo } from "@/utils/Token.js";
@@ -25,9 +25,9 @@ export const leftList = reactive([
     fn: toQuitLogin
   },
   {
-    name: "系统",
-    icon: settingsIcon,
-    fn: openStyleSetting
+    name: "应用",
+    icon: appsIcon,
+    fn: openAppList
   },
   {
     name: "用户",

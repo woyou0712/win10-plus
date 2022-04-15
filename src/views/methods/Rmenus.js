@@ -4,22 +4,19 @@ import { openApp } from "./openApp.js";
 import { openInfoMsg, msgIcon } from "@/components/infoMsg/open.js"
 import { setFooterDirection } from "./setFooter.js"
 
-import { openStyleSetting, styleIcon } from "@/components/settings/style.js"
-import { openAddUserApp, appIcon } from "@/components/settings/userApp/openAdd.js"
+import { openStyleSetting, styleIcon } from "@/components/settings/style/open.js"
+import { openAddUserApp } from "@/components/settings/appList/userApp/openAdd.js"
+import { appsIcon } from "@/components/settings/appList/open.js"
 
 /**
  * 桌面右键
  */
 export const HomeMenu = [
   {
-    icon: appIcon,
+    icon: appsIcon,
     name: "新建应用",
     fn: () => {
-      openAddUserApp({
-        submit: (form) => {
-
-        }
-      })
+      openAddUserApp({})
     }
   },
   {
